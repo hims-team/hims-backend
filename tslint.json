@@ -1,0 +1,71 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js"
+    ]
+  },
+  "rules": {
+    "ordered-imports": true,
+    "interface-name" : [true, "never-prefix"],
+    "object-literal-sort-keys": false,
+    "no-unused-expression": true,
+    "no-consecutive-blank-lines": true,
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-duplicate-imports": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-string-literal": true,
+    "no-submodule-imports": false,
+    "no-switch-case-fall-through": true,
+    "no-trailing-whitespace": true,
+    "no-var-requires": false,
+    "no-unused-variable": true,
+    "eofline": true,
+    "import-name": false,
+    "variable-name": false,
+    "no-console": [
+      true,
+      "log",
+      "error",
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true,
+        "singleline": "never"
+      }
+    ],
+    "max-line-length": [
+      true,
+      100
+    ]
+  }
+}

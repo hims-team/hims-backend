@@ -15,7 +15,8 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "start:ts:dev": "yarn run build && yarn run watch",
     "migrate": "cross-env NODE_ENV=development sequelize db:migrate",
-    "clean-db": "cross-env NODE_ENV=development sequelize db:migrate:undo:all"
+    "clean-db": "cross-env NODE_ENV=development sequelize db:migrate:undo:all",
+    "test:commit": "echo \"sample test\""
   },
   "repository": "https://github.com/hims-team/hims-backend.git",
   "author": "ajimae <meeky.ae@gmail.com>",
@@ -31,6 +32,8 @@
     "typescript": "^3.4.3"
   },
   "dependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
     "@types/bluebird": "^3.5.26",
     "@types/express-graphql": "^0.6.2",
     "@types/graphql": "^14.2.0",
@@ -46,13 +49,28 @@
     "express-graphql": "^0.8.0",
     "graphql": "^14.2.1",
     "graphql-tools": "^4.0.4",
+    "husky": "^2.1.0",
+    "lint-staged": "^7.1.2",
     "merge-graphql-schemas": "^1.5.8",
     "mongoose": "^5.5.2",
     "nodemon": "^1.18.11",
     "pg": "^7.10.0",
     "request": "^2.88.0",
     "sequelize": "4.41.0",
-    "sequelize-cli": "5.2.0",
-    "ts-node-dev": "^1.0.0-pre.32"
+    "sequelize-cli": "^5.4.0",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "tslint-config-airbnb": "^5.9.2",
+    "tslint-eslint-rules": "^5.3.1",
+    "tslint-jsdoc-rules": "^0.1.2",
+    "tslint-plugin-prettier": "^2.0.1"
+  },
+  "lint-staged": {
+    "*.ts": "yarn tslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn test:commit",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

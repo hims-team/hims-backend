@@ -16,7 +16,8 @@
     "start:ts:dev": "yarn run build && yarn run watch",
     "migrate": "cross-env NODE_ENV=development sequelize db:migrate",
     "clean-db": "cross-env NODE_ENV=development sequelize db:migrate:undo:all",
-    "test:commit": "echo \"sample test\""
+    "test:commit": "nyc mocha ./src/tests/**/*.test.ts",
+    "test": "yarn test:commit"
   },
   "repository": "https://github.com/hims-team/hims-backend.git",
   "author": "ajimae <meeky.ae@gmail.com>",
@@ -26,7 +27,13 @@
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.1",
+    "@types/mocha": "^5.2.6",
     "@types/request": "^2.48.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.0.0",
+    "source-map-support": "^0.5.12",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.3"
@@ -72,5 +79,26 @@
       "pre-commit": "lint-staged && yarn test:commit",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/tests/**/*.test.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "text",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

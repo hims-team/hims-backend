@@ -9,6 +9,7 @@ const config = {
     port: process.env.DB_PORT,
     dialect: 'postgres',
     logging: false,
+    use_env_variable: 'DATABASE_URL'
   },
 
   test: {

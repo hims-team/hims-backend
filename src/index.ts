@@ -1,4 +1,3 @@
-// tslint:disable:no-console
 import dotenv from 'dotenv';
 import app from './app';
 import models from './db/models/index';

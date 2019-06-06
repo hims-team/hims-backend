@@ -1,45 +1,55 @@
-import * as bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv'
-import express from 'express';
-import routes from './routes';
+import { ApolloServer, gql } from 'apollo-server';
+import 'dotenv/config';
 
-import expressGraphQl from 'express-graphql';
-import { GraphQLSchema } from 'graphql';
+// This is a (sample) collection of books we'll be able to query
+// the GraphQL server for.  A more complete example might fetch
+// from an existing data source like a REST API or database.
+const books = [
+  {
+    title: 'Harry Potter and the Chamber of Secrets',
+    author: 'J.K. Rowling',
+  },
+  {
+    title: 'Jurassic Park',
+    author: 'Michael Crichton',
+  },
+];
 
-import mutation from '../graphql/mutation';
-import query from '../graphql/queries';
+// Type definitions define the "shape" of your data and specify
+// which ways the data can be fetched from the GraphQL server.
+const typeDefs = gql`
+  # Comments in GraphQL are defined with the hash (#) symbol.
 
-class App {
-
-  public app: express.Application;
-
-  constructor() {
-    this.app = express();
-    this.config();
+  # This "Book" type can be used in other type declarations.
+  type Book {
+    title: String
+    author: String
   }
 
-  private config(): void {
-    dotenv.config();
-
-    this.app.use(cors());
-    this.app.use(bodyParser.json());
-
-    // support application/x-www-form-urlencoded post data
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-
-    const schema = new GraphQLSchema({
-      query,
-      mutation,
-    });
-
-    // routes
-    this.app.use('/api/v1', routes);
-    this.app.use('/', expressGraphQl({
-      schema,
-      graphiql: true,
-    }));
+  # The "Query" type is the root of all GraphQL queries.
+  # (A "Mutation" type will be covered later on.)
+  type Query {
+    books: [Book]
   }
-}
+`;
 
-export default new App().app;
+// Resolvers define the technique for fetching the types in the
+// schema.  We'll retrieve books from the "books" array above.
+const resolvers = {
+  Query: {
+    books: () => books,
+  },
+};
+
+// In the most basic sense, the ApolloServer can be started
+// by passing type definitions (typeDefs) and the resolvers
+// responsible for fetching the data for those types.
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// This `listen` method launches a web-server.  Existing apps
+// can utilize middleware options, which we'll discuss later.
+// server.listen().then(({ url }) => {
+//   console.log(`🚀  Server ready at ${url}`);
+// });
+
+export default server;

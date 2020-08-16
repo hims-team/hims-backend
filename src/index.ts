@@ -1,19 +1,6 @@
-import dotenv from 'dotenv';
-import app from './app';
-import models from './db/models/index';
 
-dotenv.config();
+import server from './app';
 
-const PORT = process.env.PORT || 9000;
-
-models.sequelize.sync().then(() => {
-  app.on('error', (error) => {
-    console.log(error);
-  });
-  app.on('listening', (listen) => {
-    console.log(listen);
-  });
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT} 🚀`);
-  });
+server.listen({ port: 3000 }).then(({ url }) => {
+  // console.log(`🚀  Server ready at ${url}`);
 });

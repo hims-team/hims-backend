@@ -10,6 +10,7 @@ const config = {
     operatorsAliases: false,
     dialect: 'postgres',
     logging: false,
+    use_env_variable: 'DATABASE_URL'
   },
 
   test: {
